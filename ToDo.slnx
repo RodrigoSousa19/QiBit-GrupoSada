@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ToDo.API/ToDo.API.csproj" />
+  <Project Path="ToDo.Application/ToDo.Application.csproj" />
+  <Project Path="ToDo.Core/ToDo.Core.csproj" />
+  <Project Path="ToDo.Infrastructure/ToDo.Infrastructure.csproj" />
+</Solution>
