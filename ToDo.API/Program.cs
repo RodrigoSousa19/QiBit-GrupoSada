@@ -18,7 +18,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi(options =>
 {
     options.AddDocumentTransformer((document, context, cancellationToken) =>
@@ -35,7 +35,6 @@ builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
-// O handler registra a falha uma vez e devolve uma mensagem segura em todos os ambientes.
 app.UseExceptionHandler(new ExceptionHandlerOptions { SuppressDiagnosticsCallback = _ => true });
 if (app.Environment.IsDevelopment())
 {
