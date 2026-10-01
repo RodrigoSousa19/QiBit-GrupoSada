@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using ToDo.API.Filters;
 using ToDo.Application.DTOs.Input;
 using ToDo.Application.DTOs.Output;
 using ToDo.Application.Services.Interfaces;
@@ -8,8 +7,8 @@ using ToDo.Core.Responses;
 namespace ToDo.API.Controllers;
 
 [ApiController]
-[TypeFilter(typeof(TaskValidationExceptionFilter))]
 [Route("api/[controller]")]
+[ProducesResponseType(typeof(Response<object>), StatusCodes.Status500InternalServerError)]
 public class TasksController(ITasksService service) : ControllerBase
 {
     /// <summary>Cria uma tarefa e gera seu identificador único.</summary>

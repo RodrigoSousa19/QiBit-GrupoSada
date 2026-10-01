@@ -1,9 +1,21 @@
+using Serilog;
+using Serilog.Events;
+using ToDo.API.ExceptionHandlers;
 using ToDo.Application;
 using ToDo.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Logging.ClearProviders();
+builder.Services.AddSerilog((services, configuration) => configuration
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}")
+    .WriteTo.File(Path.Combine(builder.Environment.ContentRootPath, "Logs", "errors-.log"), restrictedToMinimumLevel: LogEventLevel.Warning, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 14, fileSizeLimitBytes: 10 * 1024 * 1024, rollOnFileSizeLimit: true, outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} {Level:u3}] {SourceContext} {Message:lj}{NewLine}{Exception}"));
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -23,7 +35,8 @@ builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// O handler registra a falha uma vez e devolve uma mensagem segura em todos os ambientes.
+app.UseExceptionHandler(new ExceptionHandlerOptions { SuppressDiagnosticsCallback = _ => true });
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
