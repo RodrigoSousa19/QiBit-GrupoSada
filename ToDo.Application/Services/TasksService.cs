@@ -10,7 +10,8 @@ namespace ToDo.Application.Services;
 
 public class TasksService(ITasksRepository repository) : ITasksService
 {
-    public async Task<TaskOutputDto> CreateAsync(CreateTaskInputDto input, CancellationToken cancellationToken = default)
+    public async Task<TaskOutputDto> CreateAsync(CreateTaskInputDto input,
+        CancellationToken cancellationToken = default)
     {
         if (input is null)
         {
@@ -34,7 +35,8 @@ public class TasksService(ITasksRepository repository) : ITasksService
         return task is null ? null : TaskOutputDto.FromEntity(task);
     }
 
-    public async Task<IReadOnlyList<TaskOutputDto>> GetAllAsync(TaskFilterInputDto input, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<TaskOutputDto>> GetAllAsync(TaskFilterInputDto input,
+        CancellationToken cancellationToken = default)
     {
         if (input is null)
         {
@@ -51,7 +53,8 @@ public class TasksService(ITasksRepository repository) : ITasksService
         return tasks.Select(TaskOutputDto.FromEntity).ToList();
     }
 
-    public async Task<TaskOutputDto?> UpdateAsync(Guid id, UpdateTaskInputDto input, CancellationToken cancellationToken = default)
+    public async Task<TaskOutputDto?> UpdateAsync(Guid id, UpdateTaskInputDto input,
+        CancellationToken cancellationToken = default)
     {
         ValidateId(id);
 
