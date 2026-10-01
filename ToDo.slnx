@@ -3,4 +3,6 @@
   <Project Path="ToDo.Application/ToDo.Application.csproj" />
   <Project Path="ToDo.Core/ToDo.Core.csproj" />
   <Project Path="ToDo.Infrastructure/ToDo.Infrastructure.csproj" />
+  <Project Path="ToDo.Tests/ToDo.Tests.csproj" />
 </Solution>
+
